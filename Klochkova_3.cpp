@@ -3,6 +3,8 @@
 #include <limits>
 using namespace std;
 
+const int m = 5;// сдвиг списка на m элементов
+const int n = 10;//количество элементов в списке
 
 struct Node 
 {
@@ -17,10 +19,12 @@ class List
 public:
     List() :head(NULL) {}; //Конструктор по умолчанию (Head=NULL)
     ~List();    //Прототип деструктора
-    void initNode();
+    void initNode(int n);
     void show();
     void pushNode(Node& node);
-    void rShiftList(Node& node, int n);
+    void rShiftList(Node& node, int m);
+    int testEmptyList();
+    int testrShiftList(int n, int m);
 };
 
 List::~List()
@@ -36,7 +40,7 @@ List::~List()
 }
 void Node::init(Node& node)
 {
-    node.val = 12;
+    node.val = 12;//начальное значение для добавляемого элемента в список
 }
 
 void List::show()
@@ -52,11 +56,10 @@ void List::show()
     cout << endl;
 }
 
-void List::initNode()
+void List::initNode(int n)
 {
     Node* temp;
     int i;
-    int n = 10;
     int initVal = 0;
     for (i = 0; i < n; i++)
     {
@@ -94,18 +97,41 @@ void List::rShiftList(Node& node, int n)
     }
 }
 
+int List::testEmptyList()
+{
+    if (head == NULL)
+    {
+        cout << "Ошибка: список пуст";
+        return -1;
+    }
+    return 0;
+}
+
+int List::testrShiftList(int n, int m)
+{
+    if (m > n+1)
+    {
+        cout << "Ошибка: сдвиг превышает количество элементов";
+        return -1;
+    }
+    return 0;
+}
+
 int main()
 {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
     Node node;
-    int n = 5;
     List lst;
-    lst.initNode();
+    lst.initNode(n);
+    if (lst.testEmptyList() == -1)
+        return -1;
     lst.show();
     node.init(node);
     lst.pushNode(node);
     lst.show();
-    lst.rShiftList(node, n);
+    if (lst.testrShiftList(n,m) == -1)
+        return -1;
+    lst.rShiftList(node, m);
     lst.show();
 }
